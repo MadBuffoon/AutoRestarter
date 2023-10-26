@@ -1,0 +1,4 @@
+F:\Coding\AutoRestarter\AutoRestarter\obj\Release\net5.0-windows\MainWindow.g.cs
+F:\Coding\AutoRestarter\AutoRestarter\obj\Release\net5.0-windows\App.g.cs
+F:\Coding\AutoRestarter\AutoRestarter\obj\Release\net5.0-windows\AutoRestarter_MarkupCompile.cache
+F:\Coding\AutoRestarter\AutoRestarter\obj\Release\net5.0-windows\AutoRestarter_MarkupCompile.lref
