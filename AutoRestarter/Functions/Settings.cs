@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Windows;
 using AutoRestarter.Tools;
 
 namespace AutoRestarter.Functions;
@@ -71,47 +72,112 @@ internal class Settings
 
     public void LoadSettings()
     {
-        var loadedSettings = ReadAllSettings();
-        Logs.Log("Applying the Settings");
-
-        foreach (var setting in loadedSettings)
+        if (File.Exists(settingsFilePath))
         {
-            var settingsParts = setting.Split(',');
+            var loadedSettings = ReadAllSettings();
+            Logs.Log("Applying the Settings");
 
-            if (settingsParts.Length >= 5 && int.TryParse(settingsParts[0], out var row))
+            foreach (var setting in loadedSettings)
             {
-                if (row == 1)
+                var settingsParts = setting.Split(',');
+
+                if (settingsParts.Length >= 5 && int.TryParse(settingsParts[0], out var row))
                 {
-                    m_WndRef.SettingsExeName1.Text = settingsParts[1];
+                    if (row == 1)
+                    {
+                        if (settingsParts[1] != "")
+                        {
+                            m_WndRef.SettingsExeName1.Text = settingsParts[1];
 
-                    m_WndRef.SettingsFolderLocation1.Text = settingsParts[3];
-                    m_WndRef.SettingsLaunchOptions1.Text = settingsParts[4];
+                            m_WndRef.SettingsFolderLocation1.Text = settingsParts[3];
+                            m_WndRef.SettingsLaunchOptions1.Text = settingsParts[4];
 
-                    m_WndRef.ExeName1.Text = settingsParts[1];
-                    m_WndRef.CheckBox1.IsChecked = bool.Parse(settingsParts[2]);
-                }
+                            m_WndRef.ExeName1.Text = settingsParts[1];
+                            m_WndRef.CheckBox1.IsChecked = bool.Parse(settingsParts[2]);
 
-                if (row == 2)
-                {
-                    m_WndRef.SettingsExeName2.Text = settingsParts[1];
+                            m_WndRef.StatsColor1.Visibility = Visibility.Visible;
+                            m_WndRef.ExeName1.Visibility = Visibility.Visible;
+                            m_WndRef.CheckBox1.Visibility = Visibility.Visible;
+                            m_WndRef.StartStop1.Visibility = Visibility.Visible;
+                        }
+                        else
+                        {
+                            m_WndRef.StatsColor1.Visibility = Visibility.Hidden;
+                            m_WndRef.ExeName1.Visibility = Visibility.Hidden;
+                            m_WndRef.CheckBox1.Visibility = Visibility.Hidden;
+                            m_WndRef.StartStop1.Visibility = Visibility.Hidden;
+                        }
+                    }
 
-                    m_WndRef.SettingsFolderLocation2.Text = settingsParts[3];
-                    m_WndRef.SettingsLaunchOptions2.Text = settingsParts[4];
+                    if (row == 2)
+                    {
+                        if (settingsParts[1] != "")
+                        {
+                            m_WndRef.SettingsExeName2.Text = settingsParts[1];
 
-                    m_WndRef.ExeName2.Text = settingsParts[1];
-                    m_WndRef.CheckBox2.IsChecked = bool.Parse(settingsParts[2]);
-                }
+                            m_WndRef.SettingsFolderLocation2.Text = settingsParts[3];
+                            m_WndRef.SettingsLaunchOptions2.Text = settingsParts[4];
 
-                if (row == 3)
-                {
-                    m_WndRef.SettingsExeName3.Text = settingsParts[1];
-                    m_WndRef.SettingsFolderLocation3.Text = settingsParts[3];
-                    m_WndRef.SettingsLaunchOptions3.Text = settingsParts[4];
+                            m_WndRef.ExeName2.Text = settingsParts[1];
+                            m_WndRef.CheckBox2.IsChecked = bool.Parse(settingsParts[2]);
 
-                    m_WndRef.ExeName3.Text = settingsParts[1];
-                    m_WndRef.CheckBox3.IsChecked = bool.Parse(settingsParts[2]);
+                            m_WndRef.StatsColor2.Visibility = Visibility.Visible;
+                            m_WndRef.ExeName2.Visibility = Visibility.Visible;
+                            m_WndRef.CheckBox2.Visibility = Visibility.Visible;
+                            m_WndRef.StartStop2.Visibility = Visibility.Visible;
+                        }
+                        else
+                        {
+                            m_WndRef.StatsColor2.Visibility = Visibility.Hidden;
+                            m_WndRef.ExeName2.Visibility = Visibility.Hidden;
+                            m_WndRef.CheckBox2.Visibility = Visibility.Hidden;
+                            m_WndRef.StartStop2.Visibility = Visibility.Hidden;
+                        }
+                    }
+
+                    if (row == 3)
+                    {
+                        if (settingsParts[1] != "")
+                        {
+                            m_WndRef.SettingsExeName3.Text = settingsParts[1];
+                            m_WndRef.SettingsFolderLocation3.Text = settingsParts[3];
+                            m_WndRef.SettingsLaunchOptions3.Text = settingsParts[4];
+
+                            m_WndRef.ExeName3.Text = settingsParts[1];
+                            m_WndRef.CheckBox3.IsChecked = bool.Parse(settingsParts[2]);
+
+                            m_WndRef.StatsColor3.Visibility = Visibility.Visible;
+                            m_WndRef.ExeName3.Visibility = Visibility.Visible;
+                            m_WndRef.CheckBox3.Visibility = Visibility.Visible;
+                            m_WndRef.StartStop3.Visibility = Visibility.Visible;
+                        }
+                        else
+                        {
+                            m_WndRef.StatsColor3.Visibility = Visibility.Hidden;
+                            m_WndRef.ExeName3.Visibility = Visibility.Hidden;
+                            m_WndRef.CheckBox3.Visibility = Visibility.Hidden;
+                            m_WndRef.StartStop3.Visibility = Visibility.Hidden;
+                        }
+                    }
                 }
             }
+        }
+        else
+        {
+            m_WndRef.StatsColor1.Visibility = Visibility.Hidden;
+            m_WndRef.ExeName1.Visibility = Visibility.Hidden;
+            m_WndRef.CheckBox1.Visibility = Visibility.Hidden;
+            m_WndRef.StartStop1.Visibility = Visibility.Hidden;
+
+            m_WndRef.StatsColor2.Visibility = Visibility.Hidden;
+            m_WndRef.ExeName2.Visibility = Visibility.Hidden;
+            m_WndRef.CheckBox2.Visibility = Visibility.Hidden;
+            m_WndRef.StartStop2.Visibility = Visibility.Hidden;
+
+            m_WndRef.StatsColor3.Visibility = Visibility.Hidden;
+            m_WndRef.ExeName3.Visibility = Visibility.Hidden;
+            m_WndRef.CheckBox3.Visibility = Visibility.Hidden;
+            m_WndRef.StartStop3.Visibility = Visibility.Hidden;
         }
     }
 }

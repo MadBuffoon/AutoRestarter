@@ -10,13 +10,15 @@ namespace AutoRestarter.Functions;
 
 public class RunEXEs
 {
-    // Reference parent window
-    private readonly MainWindow m_WndRef;
-
     private readonly Dictionary<string, Task> autoRestartTasks = new();
 
     private readonly string currentLoction = MainWindow.CurrentInstalLoction();
+
     private readonly List<string> loadedSettings = Settings.ReadAllSettings();
+
+    // Reference parent window
+    private readonly MainWindow m_WndRef;
+    private bool stopStatusCheck; // This variable will control when to stop the status checks.
 
     public RunEXEs(MainWindow _wndRef)
     {
@@ -25,10 +27,7 @@ public class RunEXEs
 
     public void StartEXEs(string start, bool AutoCheck)
     {
-        if (!AutoCheck)
-        {
-            Logs.Log($"Starting the {start}");
-        }
+        if (!AutoCheck) Logs.Log($"Starting the {start}");
         foreach (var setting in loadedSettings)
         {
             var settingsParts = setting.Split(',');
@@ -85,7 +84,7 @@ public class RunEXEs
                                 StartExeWithAutoRestart(ExeName, FolderLocation, LaunchOptions);
                             else if (!AutoCheck)
                                 Logs.Log($"{ExeName} is already running.")
-                                ;
+                                    ;
                         }
                         else if (start == "EXE2")
                         {
@@ -118,7 +117,7 @@ public class RunEXEs
                                 StartExeWithAutoRestart(ExeName, FolderLocation, LaunchOptions);
                             else if (!AutoCheck)
                                 Logs.Log($"{ExeName} is already running.")
-                                ;
+                                    ;
                         }
                         else if (start == "EXE3")
                         {
@@ -141,6 +140,7 @@ public class RunEXEs
         var processes = Process.GetProcessesByName(Path.GetFileNameWithoutExtension(processName));
         return processes.Length > 0 ? processes[0] : null;
     }
+
     public async Task StartAuto()
     {
         stopStatusCheck = false;
@@ -151,49 +151,44 @@ public class RunEXEs
             await Task.Delay(TimeSpan.FromSeconds(5));
         }
     }
-   private void StartExeWithAutoRestart(string exeName, string folderLocation, string launchOptions)
-{
-    if (File.Exists(Path.Combine(folderLocation, exeName))) // Check if the executable file exists
+
+    private void StartExeWithAutoRestart(string exeName, string folderLocation, string launchOptions)
     {
-        Logs.Log($"Starting {exeName} with auto-restart");
+        if (File.Exists(Path.Combine(folderLocation, exeName))) // Check if the executable file exists
+        {
+            Logs.Log($"Starting {exeName} with auto-restart");
 
-                if (!AutoShouldContinue(exeName))
-                    return;
+            if (!AutoShouldContinue(exeName))
+                return;
 
-                // Check if there is an existing process with the same name
-                if (!IsExeRunning(exeName))
+            // Check if there is an existing process with the same name
+            if (!IsExeRunning(exeName))
+                // Logs.Log($"Starting {exeName}");
+                // Logs.Log($"Working Directory: {folderLocation}");
+                // Logs.Log($"Command Line Arguments: {launchOptions}");
+                Process.Start(new ProcessStartInfo
                 {
-                        // Logs.Log($"Starting {exeName}");
-                        // Logs.Log($"Working Directory: {folderLocation}");
-                        // Logs.Log($"Command Line Arguments: {launchOptions}");
-                        
-                        Process.Start(new ProcessStartInfo
-                        {
-                            FileName = Path.Combine(folderLocation, exeName),
-                            WorkingDirectory = folderLocation,
-                            Arguments = launchOptions,
-                            UseShellExecute = true,
-                        });
-
-                }
-                else
-                {
-                    Logs.Log($"{exeName} is already running.");
-                    // You may add a delay between restart attempts, e.g., Task.Delay(TimeSpan.FromSeconds(30)).Wait();
-                }
+                    FileName = Path.Combine(folderLocation, exeName),
+                    WorkingDirectory = folderLocation,
+                    Arguments = launchOptions,
+                    UseShellExecute = true
+                });
+            else
+                Logs.Log($"{exeName} is already running.");
+            // You may add a delay between restart attempts, e.g., Task.Delay(TimeSpan.FromSeconds(30)).Wait();
+        }
+        else
+        {
+            Logs.Log($"{exeName} does not exist. Cannot start.");
+        }
     }
-    else
-    {
-        Logs.Log($"{exeName} does not exist. Cannot start.");
-    }
-}
-
 
 
     private bool AutoShouldContinue(string exeName)
     {
         var autoValue =
-            bool.Parse(GetSettingsForEXE(exeName, 2)); // 2 corresponds to the "True" or "False" part in the example settings
+            bool.Parse(GetSettingsForEXE(exeName,
+                2)); // 2 corresponds to the "True" or "False" part in the example settings
         Logs.Log($"AutoShouldContinue {autoValue}");
         return autoValue;
     }
@@ -229,16 +224,14 @@ public class RunEXEs
 
     private void StartEXE(string exeName, string folderLocation, string launchOptions)
     {
-
         if (File.Exists(folderLocation + exeName)) // Check if the executable file exists
         {
             Logs.Log($"{exeName} is starting.");
-            bool autoValue = bool.Parse(GetSettingsForEXE(exeName, 2));
+            var autoValue = bool.Parse(GetSettingsForEXE(exeName, 2));
             if (!autoValue)
             {
                 var existingProcess = IsExeRunning(exeName);
                 if (!existingProcess)
-                {
                     try
                     {
                         // Logs.Log($"Starting {exeName}.exe");
@@ -249,18 +242,15 @@ public class RunEXEs
                             FileName = exeName,
                             WorkingDirectory = folderLocation,
                             Arguments = launchOptions,
-                            UseShellExecute = true,
+                            UseShellExecute = true
                         });
                     }
                     catch (Exception ex)
                     {
                         Logs.Log($"Exception3: {ex}");
                     }
-                }
                 else
-                {
                     Logs.Log($"{exeName} is already running.");
-                }
             }
             else
             {
@@ -314,35 +304,24 @@ public class RunEXEs
         if (rowNumber >= 0 && rowNumber <= statsColors.Length)
         {
             //Logs.Log($"Row Number {rowNumber}");
-            var colorIndex = rowNumber-1; // Subtract 1 to account for 0-based indexing
+            var colorIndex = rowNumber - 1; // Subtract 1 to account for 0-based indexing
             if (running)
-            {
                 statsColors[colorIndex] = new SolidColorBrush(Colors.Green);
-            }
             else
-            {
                 statsColors[colorIndex] = new SolidColorBrush(Colors.Red);
-            }
 
             // Update the UI elements with the new SolidColorBrush
             if (rowNumber == 1)
-            {
                 //Logs.Log($"Stats 1 {rowNumber}");
                 m_WndRef.StatsColor1.Fill = statsColors[colorIndex];
-            }
             else if (rowNumber == 2)
-            {
                 //Logs.Log($"Stats 2 {rowNumber}");
                 m_WndRef.StatsColor2.Fill = statsColors[colorIndex];
-            }
             else if (rowNumber == 3)
-            {
                 //Logs.Log($"Stats 3 {rowNumber}");
                 m_WndRef.StatsColor3.Fill = statsColors[colorIndex];
-            }
         }
     }
-    private bool stopStatusCheck = false; // This variable will control when to stop the status checks.
 
     public async Task StartStatusCheck()
     {
@@ -375,17 +354,12 @@ public class RunEXEs
                 if (File.Exists(Path.Combine(folderLocation, exeName))) // Check if the executable file exists
                 {
                     var isRunning = IsExeRunning(exeName);
-                        if (isRunning)
-                        {
-                            //Logs.Log($"{exeName} is running");
-                            StatusColor(exeName, true);
-                        }
-                        else
-                        {
-                           // Logs.Log($"{exeName} is not running");
-                            StatusColor(exeName, false);
-                        }
-                    
+                    if (isRunning)
+                        //Logs.Log($"{exeName} is running");
+                        StatusColor(exeName, true);
+                    else
+                        // Logs.Log($"{exeName} is not running");
+                        StatusColor(exeName, false);
                 }
             }
         }
@@ -397,12 +371,7 @@ public class RunEXEs
     {
         var processes = GetRunningProcess(exeName);
         if (processes == null)
-        {
             return false;
-        }
-        else
-        {
-            return true;
-        }
+        return true;
     }
 }

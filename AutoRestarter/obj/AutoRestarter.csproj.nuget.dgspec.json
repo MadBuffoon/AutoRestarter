@@ -44,12 +44,6 @@
       "frameworks": {
         "net7.0-windows7.0": {
           "targetAlias": "net7.0-windows",
-          "dependencies": {
-            "Discord.Net": {
-              "target": "Package",
-              "version": "[3.12.0, )"
-            }
-          },
           "imports": [
             "net461",
             "net462",

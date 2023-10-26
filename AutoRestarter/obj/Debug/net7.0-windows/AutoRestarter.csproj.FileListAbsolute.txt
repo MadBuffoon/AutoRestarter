@@ -26,7 +26,6 @@ F:\Coding\AutoRestarter\AutoRestarter\bin\Debug\net7.0-windows\AutoRestarter.pdb
 F:\Coding\AutoRestarter\AutoRestarter\obj\Debug\net7.0-windows\MainWindow.g.cs
 F:\Coding\AutoRestarter\AutoRestarter\obj\Debug\net7.0-windows\App.g.cs
 F:\Coding\AutoRestarter\AutoRestarter\obj\Debug\net7.0-windows\AutoRestarter_MarkupCompile.cache
-F:\Coding\AutoRestarter\AutoRestarter\obj\Debug\net7.0-windows\AutoRestarter_MarkupCompile.lref
 F:\Coding\AutoRestarter\AutoRestarter\obj\Debug\net7.0-windows\MainWindow.baml
 F:\Coding\AutoRestarter\AutoRestarter\obj\Debug\net7.0-windows\AutoRestarter.g.resources
 F:\Coding\AutoRestarter\AutoRestarter\obj\Debug\net7.0-windows\AutoRestarter.GeneratedMSBuildEditorConfig.editorconfig
