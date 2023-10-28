@@ -24,6 +24,7 @@ public partial class MainWindow : Window
         m_EXEs = new RunEXEs(this);
         m_Logs = new Logs(this);
         InitializeComponent();
+        VersionText.Text = "Version 1.0.3";
         Logs.ClearLog();
         Logs.Log("Started UP");
         m_Settings.LoadSettings();
