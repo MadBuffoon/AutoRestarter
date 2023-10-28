@@ -5,7 +5,7 @@
   },
   "projects": {
     "F:\\Coding\\AutoRestarter\\AutoRestarter\\AutoRestarter.csproj": {
-      "version": "1.0.0",
+      "version": "1.0.3",
       "restore": {
         "projectUniqueName": "F:\\Coding\\AutoRestarter\\AutoRestarter\\AutoRestarter.csproj",
         "projectName": "AutoRestarter",

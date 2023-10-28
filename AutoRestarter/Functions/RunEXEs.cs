@@ -14,7 +14,7 @@ public class RunEXEs
 
     private readonly string currentLoction = MainWindow.CurrentInstalLoction();
 
-    private readonly List<string> loadedSettings = Settings.ReadAllSettings();
+    private List<string> loadedSettings = Settings.ReadAllSettings();
 
     // Reference parent window
     private readonly MainWindow m_WndRef;
@@ -25,8 +25,13 @@ public class RunEXEs
         m_WndRef = _wndRef;
     }
 
+    public void UpdateSettings()
+    {
+        loadedSettings = Settings.ReadAllSettings();
+    }
     public void StartEXEs(string start, bool AutoCheck)
     {
+        UpdateSettings();
         if (!AutoCheck) Logs.Log($"Starting the {start}");
         foreach (var setting in loadedSettings)
         {
@@ -143,6 +148,80 @@ public class RunEXEs
                         StopEXE(ExeName);
                     }
                 }
+
+                if (row == 4 && (start == "EXE4" || start == "Auto" || start == "Stop4"))
+                {
+                    var ExeName = settingsParts[1];
+                    var FolderLocation = settingsParts[3];
+                    if (!Directory.Exists(settingsParts[3]))
+                    {
+                        FolderLocation = currentLoction + @"\" + settingsParts[3] + @"\";
+                    }
+                    var LaunchOptions = settingsParts[4];
+                    var Auto = bool.Parse(settingsParts[2]);
+
+                    if (start != "Stop3")
+                    {
+                        if (Auto)
+                        {
+                            // Check if the process is already running
+                            var existingProcess = IsExeRunning(ExeName);
+                            if (!existingProcess)
+                                // Start the process and create an auto-restart task
+                                StartExeWithAutoRestart(ExeName, FolderLocation, LaunchOptions);
+                            else if (!AutoCheck)
+                                Logs.Log($"{ExeName} is already running.")
+                                    ;
+                        }
+                        else if (start == "EXE4")
+                        {
+                            // Handle the case when Auto is false
+                            Logs.Log($"{ExeName} won't be automatically restarted.");
+                            StartEXE(ExeName, FolderLocation, LaunchOptions);
+                        }
+                    }
+                    else
+                    {
+                        StopEXE(ExeName);
+                    }
+                }
+
+                if (row == 5 && (start == "EXE5" || start == "Auto" || start == "Stop5"))
+                {
+                    var ExeName = settingsParts[1];
+                    var FolderLocation = settingsParts[3];
+                    if (!Directory.Exists(settingsParts[3]))
+                    {
+                        FolderLocation = currentLoction + @"\" + settingsParts[3] + @"\";
+                    }
+                    var LaunchOptions = settingsParts[4];
+                    var Auto = bool.Parse(settingsParts[2]);
+
+                    if (start != "Stop5")
+                    {
+                        if (Auto)
+                        {
+                            // Check if the process is already running
+                            var existingProcess = IsExeRunning(ExeName);
+                            if (!existingProcess)
+                                // Start the process and create an auto-restart task
+                                StartExeWithAutoRestart(ExeName, FolderLocation, LaunchOptions);
+                            else if (!AutoCheck)
+                                Logs.Log($"{ExeName} is already running.")
+                                    ;
+                        }
+                        else if (start == "EXE5")
+                        {
+                            // Handle the case when Auto is false
+                            Logs.Log($"{ExeName} won't be automatically restarted.");
+                            StartEXE(ExeName, FolderLocation, LaunchOptions);
+                        }
+                    }
+                    else
+                    {
+                        StopEXE(ExeName);
+                    }
+                }
             }
         }
     }
@@ -236,7 +315,8 @@ public class RunEXEs
 
     private void StartEXE(string exeName, string folderLocation, string launchOptions)
     {
-        if (File.Exists(folderLocation + exeName)) // Check if the executable file exists
+        string fullPath = Path.Combine(folderLocation, exeName);
+        if (File.Exists(fullPath)) // Check if the executable file exists
         {
             Logs.Log($"{exeName} is starting.");
             var autoValue = bool.Parse(GetSettingsForEXE(exeName, 2));

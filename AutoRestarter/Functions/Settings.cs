@@ -159,6 +159,56 @@ internal class Settings
                             m_WndRef.StartStop3.Visibility = Visibility.Hidden;
                         }
                     }
+
+                    if (row == 4)
+                    {
+                        if (settingsParts[1] != "")
+                        {
+                            m_WndRef.SettingsExeName4.Text = settingsParts[1];
+                            m_WndRef.SettingsFolderLocation4.Text = settingsParts[3];
+                            m_WndRef.SettingsLaunchOptions4.Text = settingsParts[4];
+
+                            m_WndRef.ExeName4.Text = settingsParts[1];
+                            m_WndRef.CheckBox4.IsChecked = bool.Parse(settingsParts[2]);
+
+                            m_WndRef.StatsColor4.Visibility = Visibility.Visible;
+                            m_WndRef.ExeName4.Visibility = Visibility.Visible;
+                            m_WndRef.CheckBox4.Visibility = Visibility.Visible;
+                            m_WndRef.StartStop4.Visibility = Visibility.Visible;
+                        }
+                        else
+                        {
+                            m_WndRef.StatsColor4.Visibility = Visibility.Hidden;
+                            m_WndRef.ExeName4.Visibility = Visibility.Hidden;
+                            m_WndRef.CheckBox4.Visibility = Visibility.Hidden;
+                            m_WndRef.StartStop4.Visibility = Visibility.Hidden;
+                        }
+                    }
+
+                    if (row == 5)
+                    {
+                        if (settingsParts[1] != "")
+                        {
+                            m_WndRef.SettingsExeName5.Text = settingsParts[1];
+                            m_WndRef.SettingsFolderLocation5.Text = settingsParts[3];
+                            m_WndRef.SettingsLaunchOptions5.Text = settingsParts[4];
+
+                            m_WndRef.ExeName5.Text = settingsParts[1];
+                            m_WndRef.CheckBox5.IsChecked = bool.Parse(settingsParts[2]);
+
+                            m_WndRef.StatsColor5.Visibility = Visibility.Visible;
+                            m_WndRef.ExeName5.Visibility = Visibility.Visible;
+                            m_WndRef.CheckBox5.Visibility = Visibility.Visible;
+                            m_WndRef.StartStop5.Visibility = Visibility.Visible;
+                        }
+                        else
+                        {
+                            m_WndRef.StatsColor5.Visibility = Visibility.Hidden;
+                            m_WndRef.ExeName5.Visibility = Visibility.Hidden;
+                            m_WndRef.CheckBox5.Visibility = Visibility.Hidden;
+                            m_WndRef.StartStop5.Visibility = Visibility.Hidden;
+                        }
+                    }
                 }
             }
         }
@@ -178,6 +228,16 @@ internal class Settings
             m_WndRef.ExeName3.Visibility = Visibility.Hidden;
             m_WndRef.CheckBox3.Visibility = Visibility.Hidden;
             m_WndRef.StartStop3.Visibility = Visibility.Hidden;
+            
+            m_WndRef.StatsColor4.Visibility = Visibility.Hidden;
+            m_WndRef.ExeName4.Visibility = Visibility.Hidden;
+            m_WndRef.CheckBox4.Visibility = Visibility.Hidden;
+            m_WndRef.StartStop4.Visibility = Visibility.Hidden;
+            
+            m_WndRef.StatsColor5.Visibility = Visibility.Hidden;
+            m_WndRef.ExeName5.Visibility = Visibility.Hidden;
+            m_WndRef.CheckBox5.Visibility = Visibility.Hidden;
+            m_WndRef.StartStop5.Visibility = Visibility.Hidden;
         }
     }
 }

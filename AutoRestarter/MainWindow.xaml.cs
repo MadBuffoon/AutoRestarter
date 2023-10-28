@@ -24,7 +24,7 @@ public partial class MainWindow : Window
         m_EXEs = new RunEXEs(this);
         m_Logs = new Logs(this);
         InitializeComponent();
-        VersionText.Text = "Version 1.0.3";
+        VersionText.Text = "Version 1.0.4";
         Logs.ClearLog();
         Logs.Log("Started UP");
         m_Settings.LoadSettings();
@@ -60,10 +60,15 @@ public partial class MainWindow : Window
             SettingsLaunchOptions2.Text);
         Settings.SaveSetting(3, SettingsExeName3.Text, CheckBox3.IsChecked, SettingsFolderLocation3.Text,
             SettingsLaunchOptions3.Text);
+        Settings.SaveSetting(4, SettingsExeName4.Text, CheckBox4.IsChecked, SettingsFolderLocation4.Text,
+            SettingsLaunchOptions4.Text);
+        Settings.SaveSetting(5, SettingsExeName5.Text, CheckBox5.IsChecked, SettingsFolderLocation5.Text,
+            SettingsLaunchOptions5.Text);
 
         // Optionally, you can also load the settings to update the UI
         m_Settings.LoadSettings();
         Task.Delay(TimeSpan.FromSeconds(1));
+        m_EXEs.UpdateSettings();
         m_EXEs.StartEXEs("Auto", false);
     }
 
@@ -167,5 +172,68 @@ public partial class MainWindow : Window
             
             m_Settings.LoadSettings();
         }
+    } 
+    private void Start4_Click(object sender, RoutedEventArgs e)
+    {
+        m_EXEs.StartEXEs("EXE4", false);
     }
+
+    private void Stop4_Click(object sender, RoutedEventArgs e)
+    {
+        m_EXEs.StartEXEs("Stop4", false);
+        Settings.SaveSetting(4, SettingsExeName4.Text, false, SettingsFolderLocation4.Text,
+            SettingsLaunchOptions4.Text);
+        CheckBox4.IsChecked = false;
+    }
+    private void BrowseButton4_Click(object sender, RoutedEventArgs e)
+    {
+        OpenFileDialog openFileDialog = new OpenFileDialog
+        {
+            Filter = "Executable Files (*.exe)|*.exe",
+            Title = "Select an Executable File"
+        };
+
+        if (openFileDialog.ShowDialog() == true)
+        {
+            string selectedFileName = Path.GetFileName(openFileDialog.FileName); // Gets Just Name of the exe
+            string? directoryPath = Path.GetDirectoryName(openFileDialog.FileName); // Remove the file name from the selectedFilePath
+            
+            Settings.SaveSetting(4, selectedFileName, CheckBox4.IsChecked, directoryPath,
+                SettingsLaunchOptions4.Text);
+            
+            m_Settings.LoadSettings();
+        }
+    }
+    private void Start5_Click(object sender, RoutedEventArgs e)
+    {
+        m_EXEs.StartEXEs("EXE5", false);
+    }
+
+    private void Stop5_Click(object sender, RoutedEventArgs e)
+    {
+        m_EXEs.StartEXEs("Stop5", false);
+        Settings.SaveSetting(5, SettingsExeName5.Text, false, SettingsFolderLocation5.Text,
+            SettingsLaunchOptions5.Text);
+        CheckBox5.IsChecked = false;
+    }
+    private void BrowseButton5_Click(object sender, RoutedEventArgs e)
+    {
+        OpenFileDialog openFileDialog = new OpenFileDialog
+        {
+            Filter = "Executable Files (*.exe)|*.exe",
+            Title = "Select an Executable File"
+        };
+
+        if (openFileDialog.ShowDialog() == true)
+        {
+            string selectedFileName = Path.GetFileName(openFileDialog.FileName); // Gets Just Name of the exe
+            string? directoryPath = Path.GetDirectoryName(openFileDialog.FileName); // Remove the file name from the selectedFilePath
+            
+            Settings.SaveSetting(5, selectedFileName, CheckBox5.IsChecked, directoryPath,
+                SettingsLaunchOptions5.Text);
+            
+            m_Settings.LoadSettings();
+        }
+    }
+    
 }
