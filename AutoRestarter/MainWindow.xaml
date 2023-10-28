@@ -90,8 +90,8 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" MaxWidth="500" />
                         <ColumnDefinition Width="Auto" MaxWidth="500" />
+                        <ColumnDefinition Width="70" />
                         <ColumnDefinition Width="Auto" MaxWidth="500" />
-                        <ColumnDefinition Width="50" />
                         <ColumnDefinition Width="50" />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
@@ -105,21 +105,24 @@
                                VerticalAlignment="Center" />
 
                     <!-- Launch Options Column -->
-                    <TextBlock Text="Launch Options" Grid.Column="2" Margin="5,0" HorizontalAlignment="Center"
+                    <TextBlock Text="Launch Options" Grid.Column="3" Margin="5,0" HorizontalAlignment="Center"
                                VerticalAlignment="Center" />
 
 
                     <TextBox Grid.Row="1" x:Name="SettingsExeName1" Text="" Grid.Column="0" Margin="5,1" />
                     <TextBox Grid.Row="1" x:Name="SettingsFolderLocation1" Text="" Grid.Column="1" Margin="5,1" />
-                    <TextBox Grid.Row="1" x:Name="SettingsLaunchOptions1" Text="" Grid.Column="2" Margin="5,1" />
+                    <Button Grid.Row="1" Content="Browse" Grid.Column="2" Click="BrowseButton1_Click" Margin="5,1" />
+                    <TextBox Grid.Row="1" x:Name="SettingsLaunchOptions1" Text="" Grid.Column="3" Margin="5,1" />
 
-                    <TextBox Grid.Row="2" x:Name="SettingsExeName2" Text="" Grid.Column="0" Margin="5,5" />
+                    <TextBox Grid.Row="2" x:Name="SettingsExeName2" Text="" Grid.Column="0" Margin="5,1" />
                     <TextBox Grid.Row="2" x:Name="SettingsFolderLocation2" Text="" Grid.Column="1" Margin="5,1" />
-                    <TextBox Grid.Row="2" x:Name="SettingsLaunchOptions2" Text="" Grid.Column="2" Margin="5,1" />
+                    <Button Grid.Row="2" Content="Browse" Grid.Column="2" Click="BrowseButton2_Click" Margin="5,1" />
+                    <TextBox Grid.Row="2" x:Name="SettingsLaunchOptions2" Text="" Grid.Column="3" Margin="5,1" />
 
                     <TextBox Grid.Row="3" x:Name="SettingsExeName3" Text="" Grid.Column="0" Margin="5,1" />
                     <TextBox Grid.Row="3" x:Name="SettingsFolderLocation3" Text="" Grid.Column="1" Margin="5,1" />
-                    <TextBox Grid.Row="3" x:Name="SettingsLaunchOptions3" Text="" Grid.Column="2" Margin="5,1" />
+                    <Button Grid.Row="3" Content="Browse" Grid.Column="2" Click="BrowseButton3_Click" Margin="5,1" />
+                    <TextBox Grid.Row="3" x:Name="SettingsLaunchOptions3" Text="" Grid.Column="3" Margin="5,1" />
 
 
                 </Grid>
@@ -136,7 +139,7 @@
         <!-- Save button -->
         <Button Content="Save" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="50" Height="20"
                 Margin="0,0,10,5" Click="SaveButton_Click" />
-        <TextBlock Text="Version 1.0.1" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="100" Height="20"
+        <TextBlock Text="Version 1.0.2" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="100" Height="20"
                    Margin="10,0,0,5" />
     </Grid>
 </Window>

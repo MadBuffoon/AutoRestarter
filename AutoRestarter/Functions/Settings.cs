@@ -19,11 +19,11 @@ internal class Settings
         m_WndRef = _wndRef;
     }
 
-    public static void SaveSetting(int row, string name, bool? flag, string path, string launchOptions)
+    public static void SaveSetting(int row, string name, bool? auto, string? path, string launchOptions)
     {
         var allSettings = ReadAllSettings();
 
-        var newSettings = $"{row},{name},{flag},{path},{launchOptions}";
+        var newSettings = $"{row},{name},{auto},{path},{launchOptions}";
         Logs.Log($"Saved: {newSettings}");
 
         var rowUpdated = false;

@@ -37,7 +37,11 @@ public class RunEXEs
                 if (row == 1 && (start == "EXE1" || start == "Auto" || start == "Stop1"))
                 {
                     var ExeName = settingsParts[1];
-                    var FolderLocation = currentLoction + @"\" + settingsParts[3] + @"\";
+                    var FolderLocation = settingsParts[3];
+                    if (!Directory.Exists(settingsParts[3]))
+                    {
+                        FolderLocation = currentLoction + @"\" + settingsParts[3] + @"\";
+                    }
                     var LaunchOptions = settingsParts[4];
                     var Auto = bool.Parse(settingsParts[2]);
 
@@ -69,7 +73,11 @@ public class RunEXEs
                 if (row == 2 && (start == "EXE2" || start == "Auto" || start == "Stop2"))
                 {
                     var ExeName = settingsParts[1];
-                    var FolderLocation = currentLoction + @"\" + settingsParts[3] + @"\";
+                    var FolderLocation = settingsParts[3];
+                    if (!Directory.Exists(settingsParts[3]))
+                    {
+                        FolderLocation = currentLoction + @"\" + settingsParts[3] + @"\";
+                    }
                     var LaunchOptions = settingsParts[4];
                     var Auto = bool.Parse(settingsParts[2]);
 
@@ -102,7 +110,11 @@ public class RunEXEs
                 if (row == 3 && (start == "EXE3" || start == "Auto" || start == "Stop3"))
                 {
                     var ExeName = settingsParts[1];
-                    var FolderLocation = currentLoction + @"\" + settingsParts[3] + @"\";
+                    var FolderLocation = settingsParts[3];
+                    if (!Directory.Exists(settingsParts[3]))
+                    {
+                        FolderLocation = currentLoction + @"\" + settingsParts[3] + @"\";
+                    }
                     var LaunchOptions = settingsParts[4];
                     var Auto = bool.Parse(settingsParts[2]);
 
@@ -349,7 +361,11 @@ public class RunEXEs
             if (settingsParts.Length >= 5 && int.TryParse(settingsParts[0], out var row))
             {
                 var exeName = settingsParts[1];
-                var folderLocation = currentLoction + @"\" + settingsParts[3] + @"\";
+                var folderLocation = settingsParts[3];
+                if (!Directory.Exists(settingsParts[3]))
+                {
+                    folderLocation = currentLoction + @"\" + settingsParts[3] + @"\";
+                }
 
                 if (File.Exists(Path.Combine(folderLocation, exeName))) // Check if the executable file exists
                 {
